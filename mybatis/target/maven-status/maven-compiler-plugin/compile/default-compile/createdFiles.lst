@@ -1,0 +1,6 @@
+com\tr\user\mapper\UserMapper.class
+com\tr\App.class
+com\tr\mybatis\executor\Executor.class
+com\tr\user\model\User.class
+com\tr\mybatis\executor\BaseExecutor.class
+com\tr\mybatis\executor\SimpleExecutor.class
