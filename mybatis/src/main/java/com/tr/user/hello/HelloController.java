@@ -1,5 +1,6 @@
 package com.tr.user.hello;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -14,22 +15,22 @@ import com.tr.user.model.User;
 @Controller
 public class HelloController {
 //	
-//	@Autowired
-//	private UserMapper userMapper;
+	@Autowired
+	private UserMapper userMapper;
 
 	@RequestMapping("/hello")
 	public String hello(String loginName, ModelMap map){
 		if(!StringUtils.isEmpty(loginName)){
 			SqlSession ss = new SqlSession(new Configuration(), new SimpleExecutor());	
+//			User user = ss.getMapper(UserMapper.class).findUser(loginName);
 			
-	//		User user = userMapper.findUser();
-			User user = ss.getMapper(UserMapper.class).findUser(loginName);
+			User user = userMapper.findUser(loginName);
 			map.put("user", user);
 		}
 		return "index";
 	}
 	
-	@RequestMapping("/hello")
+	@RequestMapping("/add")
 	public String addUser(String loginName, String password, ModelMap map){
 		if(!StringUtils.isEmpty(loginName)){
 			SqlSession ss = new SqlSession(new Configuration(), new SimpleExecutor());	

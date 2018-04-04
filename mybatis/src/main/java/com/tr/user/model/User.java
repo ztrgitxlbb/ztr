@@ -1,23 +1,19 @@
 package com.tr.user.model;
 
 public class User {
-	private String name;
-	private String password;
-
-	public String getPassword() {
-		return password;
+	private String loginName;
+	private String loginPass;
+	public String getLoginName() {
+		return loginName;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
-
-	public String getName() {
-		return name;
+	public String getLoginPass() {
+		return loginPass;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setLoginPass(String loginPass) {
+		this.loginPass = loginPass;
 	}
 
 

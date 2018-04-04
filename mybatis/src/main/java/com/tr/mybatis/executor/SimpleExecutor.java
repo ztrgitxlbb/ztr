@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.tr.user.model.User;
 
-public class SimpleExecutor implements Executor{
+public class SimpleExecutor extends BaseExecutor{
 
 	@Value("")
 	private String url;
@@ -20,26 +20,21 @@ public class SimpleExecutor implements Executor{
 	@Override
 	public <T> T query(String statment, String paramter) {
 		try {
-			Class clazz = Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user?user=root&password=root123&useSSL=true");
-			PreparedStatement st = conn.prepareStatement(statment);
+			
+			PreparedStatement st = getConnection().prepareStatement(statment);
 			st.setString(1, paramter);
 			ResultSet rs = st.executeQuery();
 			List<User> list = new ArrayList<User>();
 			while(rs.next()){
 				User user = new User();
-				user.setName(rs.getString("loginName"));
-				user.setPassword(rs.getString("loginPass"));
+				user.setLoginName(rs.getString("loginName"));
+				user.setLoginPass(rs.getString("loginPass"));
 				
 				list.add(user);
 			}
 			return (T) list;
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

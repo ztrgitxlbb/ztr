@@ -10,8 +10,8 @@ import com.tr.user.model.User;
 @Mapper
 public interface UserMapper {
 
-//	@Select("SELECT * FROM T_USER WHERE LOGINNAME = #{loginName}")
-	@Select("SELECT * FROM T_USER WHERE LOGINNAME = ?")
+//	@Select("SELECT * FROM T_USER WHERE LOGINNAME = ?")
+	@Select("SELECT LOGINNAME, LOGINPASS FROM T_USER WHERE LOGINNAME = #{loginName}")
 	User findUser(@Param("loginName") String loginName);
 	
 	@Insert("INSERT INTO T_USER(LOGINNAME, LOGINPASS) VALUES(?,?)")
