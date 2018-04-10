@@ -1,13 +1,14 @@
 package com.tr.user.mapper;
 
-import com.tr.mybatis.annotations.Insert;
-import com.tr.mybatis.annotations.Mapper;
-import com.tr.mybatis.annotations.Param;
-import com.tr.mybatis.annotations.Select;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import com.tr.user.model.User;
 
 @Mapper
-public interface UserMapper {
+public interface HelloMapper {
 
 //	@Select("SELECT * FROM T_USER WHERE LOGINNAME = ?")
 	@Select("SELECT LOGINNAME, LOGINPASS FROM T_USER WHERE LOGINNAME = #{loginName}")
