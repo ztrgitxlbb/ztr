@@ -15,30 +15,20 @@ import com.tr.user.model.User;
 @Controller
 public class UserController {
 //	
-	@Autowired
-	private UserMapper userMapper;
+//	@Autowired
+//	private UserMapper userMapper;
 
 	@RequestMapping("/user")
 	public String hello(String loginName, ModelMap map){
 		if(!StringUtils.isEmpty(loginName)){
-			SqlSession ss = new SqlSession(new Configuration(), new SimpleExecutor());	
-//			User user = ss.getMapper(UserMapper.class).findUser(loginName);
+			Configuration configuration = new Configuration();
+			SqlSession ss = new SqlSession(configuration, new SimpleExecutor(configuration));	
+			User user = ss.getMapper(UserMapper.class).findUser(loginName);
 			
 //			User user = userMapper.findUser(loginName);
-//			map.put("user", user);
+			map.put("user", user);
 		}
 		return "index";
 	}
 	
-	@RequestMapping("/add")
-	public String addUser(String loginName, String password, ModelMap map){
-		if(!StringUtils.isEmpty(loginName)){
-			SqlSession ss = new SqlSession(new Configuration(), new SimpleExecutor());	
-			
-	//		User user = userMapper.findUser();
-//			User user = ss.getMapper(UserMapper.class).findUser(loginName);
-//			map.put("user", user);
-		}
-		return "index";
-	}
 }

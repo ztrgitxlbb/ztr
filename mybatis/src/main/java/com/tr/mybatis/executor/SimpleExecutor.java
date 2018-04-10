@@ -1,45 +1,39 @@
 package com.tr.mybatis.executor;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Statement;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import com.tr.user.model.User;
+import com.tr.mybatis.executor.handler.StatementHandler;
+import com.tr.mybatis.session.Configuration;
 
 public class SimpleExecutor extends BaseExecutor{
 
-	@Value("")
-	private String url;
+	public SimpleExecutor(Configuration configuration) {
+		super(configuration);
+	}
 	
 	@Override
 	public <T> T query(String statment, String paramter) {
+		Statement stmt = null;
 		try {
+			StatementHandler sh = configuration.newStatementHandler(statment, paramter);
+			stmt = prepareInitStatement(sh);
 			
-			PreparedStatement st = getConnection().prepareStatement(statment);
-			st.setString(1, paramter);
-			ResultSet rs = st.executeQuery();
-			List<User> list = new ArrayList<User>();
-			while(rs.next()){
-				User user = new User();
-				user.setLoginName(rs.getString("loginName"));
-				user.setLoginPass(rs.getString("loginPass"));
-				
-				list.add(user);
-			}
-			return (T) list;
+			return (T) sh.query(stmt, null);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			closeStatement(stmt);
 		}
 		
-		
 		return null;
+	}
+	
+	private Statement prepareInitStatement(StatementHandler sh) throws SQLException{
+		Statement stmt = sh.prepare(getConnection());
+		
+		return stmt;
 	}
 
 }

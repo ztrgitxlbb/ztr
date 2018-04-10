@@ -21,7 +21,7 @@ public class HelloController {
 	@RequestMapping("/hello")
 	public String hello(String loginName, ModelMap map){
 		if(!StringUtils.isEmpty(loginName)){
-			SqlSession ss = new SqlSession(new Configuration(), new SimpleExecutor());	
+//			SqlSession ss = new SqlSession(new Configuration(), new SimpleExecutor());	
 //			User user = ss.getMapper(UserMapper.class).findUser(loginName);
 			
 			User user = helloMapper.findUser(loginName);
